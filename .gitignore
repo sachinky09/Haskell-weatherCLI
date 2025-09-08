@@ -1,0 +1,23 @@
+# Stack build artifacts
+.stack-work/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Cabal files
+dist/
+dist-newstyle/
+
+# Executables
+*.exe
+*.hi
+*.o
