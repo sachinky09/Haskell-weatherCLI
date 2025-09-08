@@ -7,7 +7,19 @@ import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as BL
 import Weather
 
-
+fetchCoords :: String -> IO (Maybe Location)
+fetchCoords city = do
+  let url = "https://geocoding-api.open-meteo.com/v1/search?count=1&name=" ++ city
+  r <- httpLBS =<< parseRequest url
+  let body = getResponseBody r
+  case eitherDecode body :: Either String GeoResponse of
+    Left err -> do
+      putStrLn $ "Error decoding geo response: " ++ err
+      return Nothing
+    Right geo ->
+      case results geo of
+        []    -> return Nothing
+        (x:_) -> return (Just x)
 
 fetchWeather :: Location -> IO (Maybe CurrentWeather)
 fetchWeather loc = do
